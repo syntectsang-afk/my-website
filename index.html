@@ -322,6 +322,32 @@
     .social-link[aria-label="LinkedIn"]:hover { color: #0a66c2; }
     .social-link[aria-label="GitHub"]:hover { color: #171717; }
     .social-link[aria-label="LINE"]:hover { color: #06c755; }
+    .portfolio-gallery { position: relative; margin-top: 72px; }
+    .portfolio-gallery-head { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 24px; }
+    .portfolio-gallery-head h3 { margin: 12px 0 0; color: var(--deep-slate); font-size: clamp(1.4rem, 2.5vw, 2rem); line-height: 1.35; letter-spacing: -.04em; }
+    .portfolio-gallery-note { color: #8494aa; font-size: 11px; }
+    .portfolio-gallery-grid { display: grid; grid-template-columns: 1.05fr .95fr .95fr; grid-template-rows: 180px 180px 155px; gap: 14px; }
+    .portfolio-shot { position: relative; display: block; overflow: hidden; min-height: 0; padding: 0; border: 1px solid rgba(148,163,184,.2); border-radius: 20px; background: #eef4fb; cursor: zoom-in; box-shadow: 0 15px 35px rgba(29,43,100,.08); }
+    .portfolio-shot:first-child { grid-column: 1 / 3; grid-row: 1 / 3; }
+    .portfolio-shot img { width: 100%; height: 100%; display: block; object-fit: cover; transition: transform .45s var(--ease), filter .35s ease; }
+    .portfolio-shot:nth-child(1) img { object-position: center 48%; }
+    .portfolio-shot:nth-child(2) { grid-column: 3; grid-row: 1 / 3; }
+    .portfolio-shot:nth-child(2) img { object-position: center top; }
+    .portfolio-shot:nth-child(3) img { object-position: center 42%; }
+    .portfolio-shot:nth-child(4) img { object-position: center 38%; }
+    .portfolio-shot:nth-child(5) img { object-position: center 42%; }
+    .portfolio-shot:nth-child(6) img { object-position: center 42%; }
+    .portfolio-shot:nth-child(7) img { object-position: center 42%; }
+    .portfolio-shot::after { content: '\f00e  點擊放大'; position: absolute; right: 13px; bottom: 11px; padding: 6px 9px; border-radius: 999px; color: #fff; background: rgba(29,43,100,.76); font: 10px 'Font Awesome 6 Free', 'DM Sans', sans-serif; opacity: 0; transform: translateY(5px); transition: opacity .25s ease, transform .25s ease; }
+    .portfolio-shot:hover img { transform: scale(1.05); filter: saturate(1.08); }
+    .portfolio-shot:hover::after, .portfolio-shot:focus-visible::after { opacity: 1; transform: translateY(0); }
+    .lightbox { position: fixed; z-index: 2000; inset: 0; display: grid; place-items: center; padding: 30px; background: rgba(13,25,52,.88); opacity: 0; visibility: hidden; transition: opacity .25s ease, visibility .25s ease; }
+    .lightbox.is-open { opacity: 1; visibility: visible; }
+    .lightbox-image { max-width: min(1100px, 94vw); max-height: 86vh; border: 3px solid rgba(255,255,255,.9); border-radius: 12px; object-fit: contain; box-shadow: 0 25px 70px rgba(0,0,0,.35); transform: scale(.96); transition: transform .3s var(--ease); }
+    .lightbox.is-open .lightbox-image { transform: scale(1); }
+    .lightbox-close { position: absolute; top: 20px; right: 24px; width: 44px; height: 44px; display: grid; place-items: center; border: 1px solid rgba(255,255,255,.32); border-radius: 50%; color: #fff; background: rgba(255,255,255,.12); font-size: 20px; cursor: pointer; }
+    .lightbox-close:hover { background: rgba(255,255,255,.24); }
+    body.lightbox-open { overflow: hidden; }
     .contact-quick { display: flex; flex-wrap: wrap; gap: 10px; margin-top: auto; padding-top: 34px; }
     .contact-quick .btn-primary { min-height: 47px; padding-inline: 17px; }
     .contact-quick .btn-secondary { min-height: 47px; padding-inline: 17px; }
@@ -571,6 +597,11 @@
       .solutions-section { padding: 76px 0; }
       .solutions-grid { grid-template-columns: 1fr; }
       .solution-card { min-height: 0; }
+      .portfolio-gallery { margin-top: 54px; }
+      .portfolio-gallery-head { align-items: flex-start; flex-direction: column; gap: 8px; }
+      .portfolio-gallery-grid { grid-template-columns: repeat(2, minmax(0,1fr)); grid-template-rows: 180px 180px 180px; }
+      .portfolio-shot:first-child { grid-column: 1 / -1; grid-row: auto; }
+      .portfolio-shot:nth-child(2) { grid-column: auto; grid-row: auto; }
       .contact-section { padding: 73px 0 40px; }
       .contact-panel { gap: 32px; padding: 23px 17px; border-radius: 23px; }
       .contact-copy h2 { font-size: clamp(1.8rem, 8vw, 2.5rem); }
@@ -606,6 +637,27 @@
       *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .01ms !important; }
       .reveal { opacity: 1; transform: none; }
       #hero-network { display: none; }
+    }
+  </style>
+  <style>
+    /* Compact layout: preserve the original sections while reducing vertical rhythm. */
+    :root { --header-height: 68px; }
+    .section-pad { padding: 68px 0; }
+    .hero { min-height: 690px; padding: calc(var(--header-height) + 34px) 0 46px; }
+    .hero-grid { gap: 12px; }
+    .hero-art { min-height: 380px; transform: scale(.88); transform-origin: center; }
+    .hero-proof { margin-top: 26px; }
+    .section-topline { margin-bottom: 30px; }
+    .about-main, .expertise-grid, .solutions-grid, .insights-grid { gap: 28px; }
+    .identity-panel { min-height: 330px; }
+    .contact-section { padding-top: 68px !important; padding-bottom: 68px !important; }
+    .language-toggle { display:inline-flex; align-items:center; gap:6px; margin-left:8px; padding:8px 11px; border:1px solid rgba(37,99,235,.22); border-radius:999px; background:#fff; color:#244fbc; font-size:11px; font-weight:700; cursor:pointer; }
+    .language-toggle:hover { border-color:#10b981; color:#0f766e; }
+    @media (max-width:640px) {
+      .section-pad { padding: 48px 0; }
+      .hero { min-height: auto; padding: 100px 0 34px; }
+      .hero-art { min-height: 285px; transform: scale(.72); margin:-22px 0 -36px; }
+      .identity-panel { min-height: 280px; }
     }
   </style>
 </head>
@@ -723,6 +775,21 @@
             <p class="reveal" style="margin:24px 0 0;color:#7b8799;font-size:12px;line-height:1.95;">我期待持續結合資料科學、AI 技術與跨產業經驗，協助更多企業與人才掌握數位轉型的契機，讓科技成為推動成長與創新的力量。</p>
           </div>
         </div>
+        <section class="portfolio-gallery reveal" aria-labelledby="gallery-title">
+          <div class="portfolio-gallery-head">
+            <div><span class="eyebrow">Selected Visual Works</span><h3 id="gallery-title">作品集裡的專業實踐與現場紀錄</h3></div>
+            <span class="portfolio-gallery-note"><i class="fa-solid fa-expand" aria-hidden="true"></i> 點擊圖片即可放大觀看</span>
+          </div>
+          <div class="portfolio-gallery-grid">
+            <button class="portfolio-shot" type="button" data-lightbox-src="作品集/mywork/資策會-training-classroom-03.png" data-lightbox-alt="資策會培訓課程現場"><img src="作品集/mywork/資策會-training-classroom-03.png" alt="資策會培訓課程現場" loading="lazy" /></button>
+            <button class="portfolio-shot" type="button" data-lightbox-src="作品集/mywork/鍾皓軒-headshot-01.jpg" data-lightbox-alt="個人專業形象照"><img src="作品集/mywork/鍾皓軒-headshot-01.jpg" alt="個人專業形象照" loading="lazy" /></button>
+            <button class="portfolio-shot" type="button" data-lightbox-src="作品集/mywork/工研院-training-classroom-02.png" data-lightbox-alt="工研院培訓課程現場"><img src="作品集/mywork/工研院-training-classroom-02.png" alt="工研院培訓課程現場" loading="lazy" /></button>
+            <button class="portfolio-shot" type="button" data-lightbox-src="作品集/mywork/國科會-expo-stage-01.jpg" data-lightbox-alt="國科會展會舞台"><img src="作品集/mywork/國科會-expo-stage-01.jpg" alt="國科會展會舞台" loading="lazy" /></button>
+            <button class="portfolio-shot" type="button" data-lightbox-src="作品集/mywork/台灣 Top3 電信業-training-classroom-01.png" data-lightbox-alt="台灣 Top3 電信業培訓現場"><img src="作品集/mywork/台灣 Top3 電信業-training-classroom-01.png" alt="台灣 Top3 電信業培訓現場" loading="lazy" /></button>
+            <button class="portfolio-shot" type="button" data-lightbox-src="作品集/mywork/台灣 Top3 航空業-training-classroom-04.png" data-lightbox-alt="台灣 Top3 航空業培訓現場"><img src="作品集/mywork/台灣 Top3 航空業-training-classroom-04.png" alt="台灣 Top3 航空業培訓現場" loading="lazy" /></button>
+            <button class="portfolio-shot" type="button" data-lightbox-src="作品集/mywork/台灣 Top3 IC設計-expo-stage-02.jpg" data-lightbox-alt="台灣 Top3 IC 設計展會舞台"><img src="作品集/mywork/台灣 Top3 IC設計-expo-stage-02.jpg" alt="台灣 Top3 IC 設計展會舞台" loading="lazy" /></button>
+          </div>
+        </section>
       </div>
     </section>
 
@@ -927,11 +994,36 @@
     </div>
   </footer>
 
+  <div class="lightbox" id="portfolio-lightbox" role="dialog" aria-modal="true" aria-label="圖片放大預覽">
+    <button class="lightbox-close" type="button" aria-label="關閉圖片預覽"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
+    <img class="lightbox-image" src="" alt="" />
+  </div>
+
   <script>
     (() => {
       'use strict';
 
       const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const lightbox = document.getElementById('portfolio-lightbox');
+      const lightboxImage = lightbox?.querySelector('.lightbox-image');
+      const lightboxClose = lightbox?.querySelector('.lightbox-close');
+      function closeLightbox() {
+        lightbox?.classList.remove('is-open');
+        document.body.classList.remove('lightbox-open');
+      }
+      document.querySelectorAll('[data-lightbox-src]').forEach(button => {
+        button.addEventListener('click', () => {
+          if (!lightbox || !lightboxImage) return;
+          lightboxImage.src = button.dataset.lightboxSrc;
+          lightboxImage.alt = button.dataset.lightboxAlt || '';
+          lightbox.classList.add('is-open');
+          document.body.classList.add('lightbox-open');
+          lightboxClose?.focus();
+        });
+      });
+      lightboxClose?.addEventListener('click', closeLightbox);
+      lightbox?.addEventListener('click', event => { if (event.target === lightbox) closeLightbox(); });
+      document.addEventListener('keydown', event => { if (event.key === 'Escape') closeLightbox(); });
       const header = document.getElementById('site-header');
       const menuToggle = document.getElementById('menu-toggle');
       const nav = document.getElementById('primary-nav');
@@ -1184,6 +1276,93 @@
       // Keep the displayed year current without external dependencies.
       const yearNode = document.getElementById('current-year');
       if (yearNode) yearNode.textContent = String(new Date().getFullYear());
+    })();
+  </script>
+  <script>
+    (() => {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'language-toggle';
+      button.textContent = 'EN';
+      button.setAttribute('aria-label', 'Switch language');
+      document.querySelector('.nav-cta')?.before(button);
+
+      const translations = {
+        'zh-Hant': {
+          nav: ['關於我', '服務', '作品', '聯絡'],
+          cta: '開始合作',
+          eyebrow: 'AI × DATA SCIENCE × SOFTWARE',
+          heroTitle: '用 AI 與資料，\n打造更好的數位體驗',
+          heroDescription: '我協助團隊把複雜的問題，轉化為清楚、可執行的產品與解決方案。',
+          primary: '看看我的作品', secondary: '與我聊聊'
+        },
+        en: {
+          nav: ['About', 'Services', 'Work', 'Contact'],
+          cta: 'Let’s work together',
+          eyebrow: 'AI × DATA SCIENCE × SOFTWARE',
+          heroTitle: 'Build better digital\nexperiences with AI & data',
+          heroDescription: 'I turn complex problems into clear, practical products and solutions for teams that want to move forward.',
+          primary: 'View my work', secondary: 'Let’s talk'
+        }
+      };
+      let language = 'zh-Hant';
+      const setText = (selector, value) => { const node = document.querySelector(selector); if (node) node.textContent = value; };
+      function applyLanguage() {
+        const t = translations[language];
+        document.documentElement.lang = language;
+        const links = document.querySelectorAll('.nav-link');
+        t.nav.forEach((text, index) => { if (links[index]) links[index].textContent = text; });
+        setText('.nav-cta', t.cta);
+        setText('.hero-kicker', t.eyebrow);
+        const lineOne = document.getElementById('type-line-one');
+        const lineTwo = document.getElementById('type-line-two');
+        if (lineOne && lineTwo) { [lineOne.textContent, lineTwo.textContent] = t.heroTitle.split('\n'); }
+        setText('.hero-description', t.heroDescription);
+        const actions = document.querySelectorAll('.hero-actions a');
+        if (actions[0]) actions[0].textContent = t.primary;
+        if (actions[1]) actions[1].textContent = t.secondary;
+        button.textContent = language === 'zh-Hant' ? 'EN' : '中文';
+      }
+      function renderEnglishPage() {
+        document.documentElement.lang = 'en';
+        document.title = 'Yi-Ting Tsang — AI & Data Science';
+        const englishNav = ['About', 'Services', 'Work', 'Contact'];
+        document.querySelectorAll('.nav-link').forEach((link, index) => { if (englishNav[index]) link.textContent = englishNav[index]; });
+        setText('.nav-cta', 'Let’s work together');
+        document.querySelector('main').innerHTML = `
+          <section class="hero" id="home">
+            <div class="container-shell hero-grid">
+              <div class="hero-copy">
+                <span class="hero-kicker">AI × DATA SCIENCE × SOFTWARE</span>
+                <h1>Build better digital experiences with AI and data.</h1>
+                <p class="hero-description">I turn complex problems into clear, practical products and solutions for teams that want to move forward.</p>
+                <div class="hero-actions"><a class="btn-primary" href="#work">View my work</a><a class="btn-secondary" href="#contact">Let’s talk</a></div>
+              </div>
+              <div class="hero-art" aria-hidden="true"><div class="art-glow"></div><div class="art-orbit"></div><div class="art-orbit orbit-two"></div><div class="art-core"><span class="core-symbol">✦</span></div></div>
+            </div>
+          </section>
+          <section class="section-pad" id="about"><div class="container-shell"><div class="section-topline"><div><span class="eyebrow">ABOUT</span><h2 class="section-title">Thoughtful technology, made useful.</h2></div><span class="section-index">01 / 04</span></div><p class="section-lead">I combine strategy, data, design, and engineering to create experiences that are easy to understand and built to last.</p></div></section>
+          <section class="section-pad" id="services" style="background:#f8fafc"><div class="container-shell"><div class="section-topline"><div><span class="eyebrow">SERVICES</span><h2 class="section-title">From idea to impact.</h2></div><span class="section-index">02 / 04</span></div><div class="strength-grid"><article class="strength-item"><h3>AI & Data</h3><p>Turn data into useful insights, intelligent workflows, and better decisions.</p></article><article class="strength-item"><h3>Digital Products</h3><p>Shape focused product experiences from early concept through launch.</p></article><article class="strength-item"><h3>Software</h3><p>Build reliable, maintainable applications that support real business needs.</p></article><article class="strength-item"><h3>Strategy</h3><p>Connect user needs, technical possibilities, and measurable outcomes.</p></article></div></div></section>
+          <section class="section-pad" id="work"><div class="container-shell"><div class="section-topline"><div><span class="eyebrow">SELECTED WORK</span><h2 class="section-title">Clear thinking. Real outcomes.</h2></div><span class="section-index">03 / 04</span></div><p class="section-lead">A selection of projects across artificial intelligence, data science, and software applications.</p><div class="portfolio-grid" style="margin-top:32px">${[
+            ['作品集/mywork/資策會-training-classroom-03.png','Training classroom'],
+            ['作品集/mywork/鍾皓軒-headshot-01.jpg','Professional portrait'],
+            ['作品集/mywork/工研院-training-classroom-02.png','Innovation training'],
+            ['作品集/mywork/國科會-expo-stage-01.jpg','Expo stage'],
+            ['作品集/mywork/台灣 Top3 電信業-training-classroom-01.png','Telecom training'],
+            ['作品集/mywork/台灣 Top3 航空業-training-classroom-04.png','Aviation training']
+          ].map(([src, alt]) => `<button class="portfolio-shot" type="button" data-lightbox-src="${src}" data-lightbox-alt="${alt}"><img src="${src}" alt="${alt}" loading="lazy" /></button>`).join('')}</div></div></section>
+          <section class="section-pad" id="contact" style="background:#172033;color:white"><div class="container-shell"><span class="eyebrow" style="color:#93c5fd">CONTACT</span><h2 class="section-title" style="color:white">Have a challenge in mind?</h2><p class="section-lead" style="color:#cbd5e1">Let’s make it clearer, simpler, and more useful together.</p><div class="hero-actions"><a class="btn-primary" href="mailto:hello@example.com">Start a conversation</a></div></div></section>`;
+        const footerBrand = document.querySelector('.footer-brand');
+        if (footerBrand) footerBrand.innerHTML = '<span class="brand-mark" aria-hidden="true">YT</span><span>© 2026 Yi-Ting Tsang<br><span style="color:#9aa5b6">AI · DATA SCIENCE · SOFTWARE</span></span>';
+        const footerMeta = document.querySelector('.footer-meta');
+        if (footerMeta) footerMeta.innerHTML = 'AI · DATA SCIENCE · SOFTWARE APPLICATIONS <a class="back-top" href="#home">Back to top ↑</a>';
+        button.textContent = '中文';
+      }
+      button.addEventListener('click', () => {
+        if (language === 'zh-Hant') { language = 'en'; renderEnglishPage(); }
+        else { window.location.reload(); }
+      });
+      applyLanguage();
     })();
   </script>
 </body>
